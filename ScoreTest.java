@@ -25,20 +25,33 @@ public class ScoreTest {
 		System.out.printf("총점: %3d점, 평균: %6.2f점\n",total,average);
 		
 		// 평균점수가 90점 미만이고 80점 이상이면 B
-		if(average>=90) {
-			System.out.println("A");
-		}
-		else if (average>=80) {
-			System.out.println("B");
-		}
-		else if (average>=70) {
-			System.out.println("C");
-		}
-		else if (average>=60) {
-			System.out.println("D");
-		}
-		else{
-			System.out.println("F");
+//		if(average>=90) {
+//			System.out.println("A");
+//		}
+//		else if (average>=80) {
+//			System.out.println("B");
+//		}
+//		else if (average>=70) {
+//			System.out.println("C");
+//		}
+//		else if (average>=60) {
+//			System.out.println("D");
+//		}
+//		else{
+//			System.out.println("F");
+//		}
+		
+		switch ((int) average / 10) { //
+			case 10: System.out.println("참잘했어요"); System.out.println("A"); break;
+			case 9:
+				System.out.println("B"); break;
+			case 8:
+				System.out.println("C"); break;
+			case 7:
+				System.out.println("D"); break;
+			default:
+				System.out.println("F"); break;
+				
 		}
 	}
 }
