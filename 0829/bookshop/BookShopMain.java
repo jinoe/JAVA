@@ -5,7 +5,6 @@ import java.util.Date;
 public class BookShopMain {
 	public static void main(String[] args) {
 		BookVO vo = new BookVO();
-		//new BOOKVO() 는 자바가 만든 기본생성자
 		
 		System.out.println(vo.getPublisher()); //String은 클래스 이므로 null로 초기화
 		
@@ -53,7 +52,7 @@ public class BookShopMain {
 		
 		
 
-		BookList bookList = new BookList(5); // 책정보 리스트 생성자 실행
+		BookList bookList = new BookList(); // 책정보 리스트 생성자 실행
 		
 		bookList.addBook(book1);			// tip. 함수작성 전 우선 함수 호출을 하고 자동완성 기능을 사용하면 편하다
 		bookList.addBook(book2);

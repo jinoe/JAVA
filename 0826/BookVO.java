@@ -47,6 +47,8 @@ public class BookVO {
 //	생성자는 리턴타입을 사용하지 않고 생성자 내부에서 return도 사용하지 않는다.
 //	생성자는 객체가 생성될 때 자동으로 실행되고 필드에 데이터 초기화를 목적으로 사용한다.
 
+	
+	
 //	2. 생성자 생성
 	
 	/*
@@ -65,33 +67,49 @@ public class BookVO {
 	*/
 //	=> 생성자 오버로딩
 
+	
+	
+	
 //	tip. 자동생성하는법 우클릭->소스->필드를 이용해 생성
 //	생성자를 1개라도 만들면 자바가 기본생성자를 만들지 않는다.
+//	this() 를 사용하여 오버라이드된 기본 생성자를 호출하여 초기화 가능 하다. (첫줄에 나와야됨을 주의)
 	public BookVO() {
+		this(" "," "," ",new Date(),0);
 		System.out.println("기본생성자가 실행됩니다.");
+		
+		/*
+		this.title = "";
+		this.author = "";
+		this.publisher = "";
+		this.writeDate = new Date();
+		this.price = 0;
+		*/
+		
 	}
-public BookVO(String title, String author, String publisher, Date writeDate, int price) {
+
+	
 //	this();  //현재클래스의 기본 생성자 호출
 //	super(); // 부모 클래스의 기본생성자, 오브젝트 클래스(최상위 클래스), 모든자바의 클래스는 오브젝트 클래스틑 상속받는다.
 //	super와 this 는 반드시 생성자의 첫 문장으로 써야한다. 즉 동시에 사용할 수 없다.
 //	super. 부모클래스
 //	this. 현재 클래스
+	
+public BookVO(String title, String author, String publisher, Date writeDate, int price) {
 	this.title = title;
 	this.author = author;
 	this.publisher = publisher;
 	this.price = price;
+	
+	writeDate.setYear(writeDate.getYear()-1900);
+	writeDate.setMonth(writeDate.getMonth()-1);
 	this.writeDate = writeDate;
 }
 
 
 
 
-
-
 //@Override 어노테이션, 이 메소드가 부모클래스에서 상속받은 메소드를 @override한 메소드임을 식별한다. (오타방지 기능)
-
-
-//	getter & setter 메소드를 선언ㄴ한다.
+//	getter & setter 메소드를 선언한다.
 //	private 권한으로 설정된 필드를 클래스 외부에서 접근할 수 있도록 예외규정을 만든다.
 //  우클릭 -> 소스 -> 게터&세터 설정
 	public void setTitle(String title) {
@@ -130,6 +148,7 @@ public BookVO(String title, String author, String publisher, Date writeDate, int
 	public int hashCode() {
 		return Objects.hash(author, price, publisher, title, writeDate);
 	}
+	
 // 객체의 필드에 저장된 실제 데이터끼리 비교할 수 있도록 만들어준다.	
 	@Override
 	public boolean equals(Object obj) {
@@ -146,6 +165,16 @@ public BookVO(String title, String author, String publisher, Date writeDate, int
 		return Objects.equals(author, other.author) && price == other.price
 				&& Objects.equals(publisher, other.publisher) && Objects.equals(title, other.title)
 				&& Objects.equals(writeDate, other.writeDate);
+	}
+
+
+	@Override
+	public String toString() {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+		DecimalFormat df = new DecimalFormat("##.###");
+//		return "BookVO [title=" + title + ", author=" + author + ", publisher=" + publisher + ", writeDate=" + writeDate
+//				+ ", price=" + price + "]";
+		return String.format("%s %s %s %s %s", title,author,publisher,sdf.format(writeDate),df.format(price));
 	}
 	
 	
