@@ -37,6 +37,19 @@ public class MemoVO {
 
 
 
+
+	public MemoVO(int idx, String name, String password, String memo, Date writeDate) {
+		// TODO Auto-generated constructor stub
+		this.idx = idx;
+		this.name = name;
+		this.password = password;
+		this.memo = memo;
+		this.writeDate = writeDate;
+		
+	}
+
+
+
 	@Override
 	public String toString() {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");

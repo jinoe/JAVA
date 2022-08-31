@@ -3,6 +3,7 @@ package com.tjoeun.memoList;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.Date;
 import java.util.Scanner;
 
 public class MemoMain {
@@ -21,9 +22,9 @@ public class MemoMain {
 		int menu;
 		while (true) {
 			while (true) {
-				System.out.println("===========================================================");
-				System.out.println(" 1.입력  2.목록보기  3.수정  4.삭제  5.작성  6.조회  7.종료");
-				System.out.println("===========================================================");
+				System.out.println("===================================================================");
+				System.out.println(" 1.입력  2.목록보기  3.수정  4.삭제  5.작성  6.파일가져오기  7.종료");
+				System.out.println("===================================================================");
 				System.out.print("메뉴 입력: ");
 				menu = scanner.nextInt();
 				if (menu > 0 && menu <= 7)
@@ -49,6 +50,7 @@ public class MemoMain {
 				break;
 			case 6:
 				fileRead();
+				break;
 			case 7:
 				System.exit(0);
 				break;
@@ -63,27 +65,50 @@ public class MemoMain {
 		Scanner scanner = null;
 		System.out.print("파일 이름을 적으세요: ");
 		Scanner scan = new Scanner(System.in);
-		String file = scan.nextLine();
-		memolist.readFile(file);
+		String file = scan.nextLine().trim();
+//		memolist.readFile(file, memolist);
+		String filepath = "C:\\Users\\tjoeun-jr-906-29\\eclipse-workspace\\0831\\src\\com\\tjoeun\\memoList\\";
+		filepath += file;
+		try {
+			scanner = new Scanner(new File(filepath));
+			String str = "";
+			while (scanner.hasNext()) {
+//				str += scanner.next() + " ";
+				int idx = scanner.nextInt();
+				String name = scanner.next().replace("`", " ");
+				String password = scanner.next();
+				String memo = scanner.next().replace("`", " ");
+				String temp = scanner.next().trim();
+				
+				String date[] = temp.split("[.]");		/* split은 "." 을 인식하지 않아서 [.] or \\. 을 해야된다. */
+				int year = Integer.parseInt(temp.substring(0,4))-1900;
+				int month = Integer.parseInt(temp.substring(5,7))-1;
+				int day = Integer.parseInt(temp.substring(8,10));
+				int hour = Integer.parseInt(temp.substring(11,13));
+				int minute = Integer.parseInt(temp.substring(14,16));
+				int second = Integer.parseInt(temp.substring(17));
+				
+				Date writeDate = new Date(year,month,day,hour,minute,second);
+				
+				MemoVO vo = new MemoVO(idx,name,password,memo,writeDate);
+				
+				memolist.addMemo(vo);
+			}
+			System.out.println("파일 읽기완료");
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+//			e.printStackTrace();
+			System.out.println(file + ".txt 파일이 존재하지 않습니다.");
+		}
 	
 	}
 
 	private static void fileWrite(MemoList memolist) {
-		String filepath = "C:\\Users\\tjoeun-jr-906-29\\eclipse-workspace\\0831\\src\\com\\tjoeun\\memoList\\";
 		System.out.print("파일 이름을 적으세요: ");
 		Scanner scan = new Scanner(System.in);
 		String file = scan.nextLine();
-		memolist.writeFile(file);
-		filepath += file;
-		try {
-			PrintWriter printWriter = new PrintWriter(filepath);
-			printWriter.write(memolist.toString());
-			printWriter.close();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+		file += ".txt";
+		memolist.writeMemo(file);		
 	}
 
 	private static void update() {
